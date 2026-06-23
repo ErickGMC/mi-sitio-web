@@ -59,7 +59,7 @@ export default function Dashboard() {
             <div className="w-full h-full rounded-full overflow-hidden bg-background border-4 border-background relative">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="/avatar.jpg" 
+                src="/foto-portada.png" 
                 alt="Erick Martinez" 
                 className="w-full h-full object-cover"
                 onError={(e) => {
