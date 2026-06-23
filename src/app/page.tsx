@@ -59,7 +59,7 @@ export default function Dashboard() {
             <div className="w-full h-full rounded-full overflow-hidden bg-background border-4 border-background relative">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img 
-                src="/foto-portada.png" 
+                src="/foto-portada.webp" 
                 alt="Erick Martinez" 
                 className="w-full h-full object-cover"
                 onError={(e) => {
