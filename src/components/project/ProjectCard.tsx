@@ -16,11 +16,11 @@ interface ProjectCardProps {
 
 const getCategoryColor = (category: string) => {
   switch (category) {
-    case "game": return "bg-purple-500/10 text-purple-500 hover:bg-purple-500/20 border-purple-500/20";
-    case "store": return "bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 border-blue-500/20";
-    case "music": return "bg-pink-500/10 text-pink-500 hover:bg-pink-500/20 border-pink-500/20";
-    case "electronics": return "bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 border-emerald-500/20";
-    default: return "bg-gray-500/10 text-gray-500";
+    case "game": return "bg-fuchsia-500/20 text-fuchsia-400 hover:bg-fuchsia-500/30 border-fuchsia-500/50 border-2";
+    case "store": return "bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 border-cyan-500/50 border-2";
+    case "music": return "bg-pink-500/20 text-pink-400 hover:bg-pink-500/30 border-pink-500/50 border-2";
+    case "electronics": return "bg-yellow-500/20 text-yellow-400 hover:bg-yellow-500/30 border-yellow-500/50 border-2";
+    default: return "bg-gray-500/20 text-gray-400 border-gray-500/50 border-2";
   }
 };
 
@@ -81,9 +81,9 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   };
 
   return (
-    <Card className="group relative overflow-hidden flex flex-col h-full bg-card/50 backdrop-blur-sm border-border/40 transition-all duration-300 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
+    <Card className="group relative overflow-hidden flex flex-col h-full bg-background/60 backdrop-blur-md border-2 border-primary/20 transition-all duration-300 hover:shadow-[0_10px_40px_-15px_rgba(34,211,238,0.3)] hover:-translate-y-2 rounded-3xl">
       {/* Subtle gradient overlay on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       
       {project.thumbnailUrl && (
         <div className="w-full h-48 relative overflow-hidden bg-muted/20 border-b border-border/40">
