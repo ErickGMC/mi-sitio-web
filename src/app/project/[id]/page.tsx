@@ -127,7 +127,7 @@ export default function ProjectDetail() {
                   title={project.title}
                 />
               ) : project.thumbnailUrl ? (
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+                // eslint-disable-next-line @next/next/no-img-element
                 <img src={project.thumbnailUrl} alt={project.title} className="w-full h-full object-cover" />
               ) : (
                 <div className="flex items-center justify-center w-full h-full text-muted-foreground">
