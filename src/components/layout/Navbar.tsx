@@ -21,7 +21,7 @@ export const Navbar = () => {
         <Link href="/" className="flex items-center space-x-2 transition-opacity hover:opacity-80">
           <Code2 className="h-6 w-6 text-primary" />
           <span className="font-bold text-lg hidden sm:inline-block">
-            Showcase Portafolio
+            Erick Martinez
           </span>
         </Link>
         

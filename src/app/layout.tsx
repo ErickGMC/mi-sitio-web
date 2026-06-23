@@ -7,8 +7,8 @@ import { Navbar } from "@/components/layout/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Showcase Portafolio",
-  description: "Plataforma centralizada para proyectos web independientes",
+  title: "Erick Martinez | Portafolio & Social",
+  description: "Red social personal y portafolio de proyectos de Erick Martinez.",
 };
 
 export default function RootLayout({

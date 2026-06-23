@@ -33,10 +33,10 @@ export default function Dashboard() {
       <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
         <div className="space-y-2">
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/50">
-            Explora el Portafolio
+            Erick Martinez
           </h1>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Descubre proyectos independientes, interactúa con la comunidad y encuentra inspiración.
+            Bienvenido a mi red social personal. Aquí presento mis proyectos, experimentos e ideas escalables.
           </p>
         </div>
       </div>
