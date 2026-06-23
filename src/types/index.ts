@@ -16,6 +16,7 @@ export interface Project {
   description: string;
   category: ProjectCategory;
   thumbnailUrl?: string;
+  galleryUrls?: string[];
   embedUrl?: string;
   repoUrl?: string;
   authorId: string;

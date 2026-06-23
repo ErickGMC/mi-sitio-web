@@ -6,7 +6,7 @@ import { Project } from "@/types";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Heart, MessageSquare, ExternalLink, GitBranch } from "lucide-react";
+import { Heart, MessageSquare, ExternalLink, GitBranch, X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { toggleProjectLike, checkUserProjectLike } from "@/services/db";
 
@@ -39,6 +39,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
   const [liked, setLiked] = useState(false);
   const [isLiking, setIsLiking] = useState(false);
   const [optimisticDiff, setOptimisticDiff] = useState(0);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   const likesCount = Math.max(0, (project.likesCount || 0) + optimisticDiff);
 
@@ -85,14 +86,51 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       {/* Subtle gradient overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       
-      {project.thumbnailUrl && (
-        <div className="w-full h-48 relative overflow-hidden bg-muted/20 border-b border-border/40">
+      {project.galleryUrls && project.galleryUrls.length > 0 ? (
+        <div className="w-full h-32 flex border-b border-border/40 bg-muted/20 relative z-10">
+          {project.galleryUrls.slice(0, 3).map((img, i) => (
+            <div 
+              key={i} 
+              className="flex-1 h-full border-r last:border-r-0 border-border/40 overflow-hidden cursor-pointer group/img relative" 
+              onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightboxImage(img); }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={img} alt={`Preview ${i+1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-110" />
+              <div className="absolute inset-0 bg-black/0 group-hover/img:bg-black/20 transition-colors" />
+            </div>
+          ))}
+        </div>
+      ) : project.thumbnailUrl && (
+        <div className="w-full h-48 relative overflow-hidden bg-muted/20 border-b border-border/40 relative z-10">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img 
             src={project.thumbnailUrl} 
             alt={`Vista previa de ${project.title}`}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 cursor-pointer"
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightboxImage(project.thumbnailUrl!); }}
           />
+        </div>
+      )}
+
+      {lightboxImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm" 
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightboxImage(null); }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src={lightboxImage} 
+            alt="Expanded preview" 
+            className="max-w-[90vw] max-h-[90vh] object-contain rounded-xl shadow-2xl animate-in zoom-in duration-300" 
+          />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute top-4 right-4 text-white hover:bg-white/20 hover:text-white" 
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightboxImage(null); }}
+          >
+            <X className="w-6 h-6" />
+          </Button>
         </div>
       )}
 

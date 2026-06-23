@@ -46,10 +46,10 @@ export default function Dashboard() {
             🚀 Creador de Proyectos
           </div>
           <h1 className="text-5xl md:text-7xl font-black tracking-tight text-foreground drop-shadow-md">
-            Erick <span className="text-transparent bg-clip-text bg-gradient-to-br from-cyan-500 via-purple-500 to-pink-500">Martinez</span>
+            Explorador <span className="text-transparent bg-clip-text bg-gradient-to-br from-cyan-500 via-purple-500 to-pink-500">Tecnológico</span>
           </h1>
           <p className="text-muted-foreground text-xl md:text-2xl max-w-2xl leading-relaxed font-medium">
-            Desarrollador, ingeniero y soñador. Explora mis locuras en tecnología, física y electrónica.
+            Desarrollador y soñador. Explora mis locuras en tecnología, física y electrónica.
           </p>
         </div>
 

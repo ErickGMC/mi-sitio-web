@@ -26,14 +26,23 @@ export const CommentSection = ({ projectId }: CommentSectionProps) => {
 
     const q = query(
       collection(db, "comments"),
-      where("projectId", "==", projectId),
-      orderBy("createdAt", "desc")
+      where("projectId", "==", projectId)
     );
 
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const commentsData: Comment[] = [];
       querySnapshot.forEach((doc) => {
         commentsData.push({ id: doc.id, ...doc.data() } as Comment);
+      });
+      // Ordenar localmente para evitar requerir un índice compuesto en Firestore
+      commentsData.sort((a, b) => {
+        const timeA = a.createdAt && typeof (a.createdAt as any).toMillis === 'function' 
+          ? (a.createdAt as any).toMillis() 
+          : new Date(a.createdAt as any || 0).getTime();
+        const timeB = b.createdAt && typeof (b.createdAt as any).toMillis === 'function' 
+          ? (b.createdAt as any).toMillis() 
+          : new Date(b.createdAt as any || 0).getTime();
+        return timeB - timeA;
       });
       setComments(commentsData);
     }, (error) => {
