@@ -10,7 +10,7 @@ import { useAuth } from "@/context/AuthContext";
 import { CommentSection } from "@/components/project/CommentSection";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, ExternalLink, GitBranch, ArrowLeft } from "lucide-react";
+import { Heart, ExternalLink, GitBranch, ArrowLeft, X } from "lucide-react";
 import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -23,6 +23,7 @@ export default function ProjectDetail() {
   const [loading, setLoading] = useState(true);
   const [liked, setLiked] = useState(false);
   const [isLiking, setIsLiking] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (!projectId) return;
@@ -102,20 +103,39 @@ export default function ProjectDetail() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Media & Details */}
         <div className="lg:col-span-2 space-y-8">
-          <div className="rounded-xl overflow-hidden border border-border/50 bg-muted/20 aspect-video relative group shadow-2xl">
-            {project.embedUrl ? (
-              <iframe 
-                src={project.embedUrl} 
-                className="w-full h-full border-0"
-                allowFullScreen
-                title={project.title}
-              />
-            ) : (
-              <div className="flex items-center justify-center w-full h-full text-muted-foreground">
-                No hay vista previa disponible
-              </div>
-            )}
-          </div>
+          {project.galleryUrls && project.galleryUrls.length > 0 ? (
+            <div className="flex w-full gap-2 md:gap-4 h-32 md:h-56">
+              {project.galleryUrls.slice(0, 3).map((img, i) => (
+                <div 
+                  key={i} 
+                  className="flex-1 rounded-xl overflow-hidden border border-border/50 bg-muted/20 relative group shadow-lg cursor-pointer"
+                  onClick={() => setLightboxImage(img)}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={img} alt={`Preview ${i+1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-xl overflow-hidden border border-border/50 bg-muted/20 aspect-video relative group shadow-2xl">
+              {project.embedUrl ? (
+                <iframe 
+                  src={project.embedUrl} 
+                  className="w-full h-full border-0"
+                  allowFullScreen
+                  title={project.title}
+                />
+              ) : project.thumbnailUrl ? (
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={project.thumbnailUrl} alt={project.title} className="w-full h-full object-cover" />
+              ) : (
+                <div className="flex items-center justify-center w-full h-full text-muted-foreground">
+                  No hay vista previa disponible
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="space-y-6">
             <div>
@@ -182,6 +202,29 @@ export default function ProjectDetail() {
       <div className="mt-12 max-w-3xl">
         <CommentSection projectId={project.id} />
       </div>
+
+      {/* Lightbox Modal */}
+      {lightboxImage && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm" 
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightboxImage(null); }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src={lightboxImage} 
+            alt="Expanded preview" 
+            className="max-w-[90vw] max-h-[90vh] object-contain rounded-xl shadow-2xl animate-in zoom-in duration-300" 
+          />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="absolute top-4 right-4 text-white hover:bg-white/20 hover:text-white" 
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); setLightboxImage(null); }}
+          >
+            <X className="w-6 h-6" />
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
