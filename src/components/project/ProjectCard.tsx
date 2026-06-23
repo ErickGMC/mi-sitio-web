@@ -85,6 +85,17 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       {/* Subtle gradient overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       
+      {project.thumbnailUrl && (
+        <div className="w-full h-48 relative overflow-hidden bg-muted/20 border-b border-border/40">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img 
+            src={project.thumbnailUrl} 
+            alt={`Vista previa de ${project.title}`}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+      )}
+
       <CardHeader className="p-5 pb-4 space-y-3 relative z-10">
         <div className="flex justify-between items-start gap-2">
           <Badge variant="outline" className={`capitalize font-medium border ${getCategoryColor(project.category)}`}>
