@@ -117,6 +117,16 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
+      ) : project.embedUrl ? (
+        <div className="w-full aspect-video relative overflow-hidden bg-muted/20 border-b border-border/40 z-10">
+          <Image 
+            src={`https://image.thum.io/get/width/600/crop/600/${project.embedUrl}`} 
+            alt={`Captura web de ${project.title}`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
       ) : (
         <div className={`w-full aspect-video relative overflow-hidden border-b border-border/40 z-10 flex items-center justify-center ${getCategoryGradient(project.category)}`}>
           {/* Capa de desenfoque para dar un efecto premium tipo 'glass' */}
