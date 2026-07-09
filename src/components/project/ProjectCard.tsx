@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Project } from "@/types";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Heart, MessageSquare, ExternalLink, GitBranch } from "lucide-react";
+import { Heart, MessageSquare, ExternalLink, GitBranch, Gamepad2, ShoppingCart, Music, Cpu, FolderOpen } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { toggleProjectLike, checkUserProjectLike } from "@/services/db";
 
@@ -31,6 +32,27 @@ const getCategoryLabel = (category: string) => {
     case "music": return "Música/Audio";
     case "electronics": return "Electrónica";
     default: return category;
+  }
+};
+
+const getCategoryGradient = (category: string) => {
+  switch (category) {
+    case "game": return "bg-gradient-to-br from-fuchsia-500/40 via-fuchsia-500/20 to-background";
+    case "store": return "bg-gradient-to-br from-cyan-500/40 via-cyan-500/20 to-background";
+    case "music": return "bg-gradient-to-br from-pink-500/40 via-pink-500/20 to-background";
+    case "electronics": return "bg-gradient-to-br from-yellow-500/40 via-yellow-500/20 to-background";
+    default: return "bg-gradient-to-br from-gray-500/40 via-gray-500/20 to-background";
+  }
+};
+
+const getCategoryIcon = (category: string) => {
+  const className = "w-10 h-10 text-foreground/80";
+  switch (category) {
+    case "game": return <Gamepad2 className={className} />;
+    case "store": return <ShoppingCart className={className} />;
+    case "music": return <Music className={className} />;
+    case "electronics": return <Cpu className={className} />;
+    default: return <FolderOpen className={className} />;
   }
 };
 
@@ -85,14 +107,25 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       {/* Subtle gradient overlay on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/5 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       
-      {project.thumbnailUrl && (
-        <div className="w-full h-48 relative overflow-hidden bg-muted/20 border-b border-border/40 relative z-10">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img 
+      {project.thumbnailUrl ? (
+        <div className="w-full aspect-video relative overflow-hidden bg-muted/20 border-b border-border/40 z-10">
+          <Image 
             src={project.thumbnailUrl} 
             alt={`Vista previa de ${project.title}`}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
+        </div>
+      ) : (
+        <div className={`w-full aspect-video relative overflow-hidden border-b border-border/40 z-10 flex items-center justify-center ${getCategoryGradient(project.category)}`}>
+          {/* Capa de desenfoque para dar un efecto premium tipo 'glass' */}
+          <div className="absolute inset-0 bg-background/20 backdrop-blur-[2px]" />
+          
+          {/* Contenedor del ícono que reacciona al hover de la tarjeta */}
+          <div className="relative z-20 p-5 rounded-2xl bg-background/80 shadow-[0_8px_30px_rgb(0,0,0,0.12)] border border-primary/20 group-hover:scale-110 group-hover:border-primary/50 transition-all duration-500">
+            {getCategoryIcon(project.category)}
+          </div>
         </div>
       )}
 
@@ -123,7 +156,7 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
 
       <CardContent className="p-5 pt-0 flex-grow relative z-10">
         <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed">
-          {project.description}
+          {project.shortDescription || project.description}
         </p>
       </CardContent>
 
