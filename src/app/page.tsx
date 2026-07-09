@@ -28,25 +28,22 @@ export default async function Dashboard() {
       </div>
 
       {/* Hero Section */}
-      <div className="flex flex-col items-center justify-center text-center my-16 md:my-28 gap-8 relative z-10">
+      <div className="flex flex-col items-center justify-center text-center mt-10 mb-16 md:mt-16 md:mb-24 gap-5 relative z-10">
         <div className="animate-float">
-          <div className="inline-flex items-center gap-3 rounded-full border border-cyan-500/40 bg-cyan-500/10 px-6 py-2 text-sm font-bold text-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.2)] backdrop-blur-md mb-2">
-            <span className="relative flex h-3 w-3">
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-5 py-1.5 text-sm font-semibold text-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.15)] backdrop-blur-md mb-2">
+            <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-cyan-500"></span>
             </span>
             Explorador Tecnológico
           </div>
         </div>
         
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-foreground drop-shadow-2xl">
-          Mis <br className="md:hidden" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">
-            Proyectos
-          </span>
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-foreground drop-shadow-xl">
+          Mis <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500">Proyectos</span>
         </h1>
         
-        <p className="text-muted-foreground text-xl md:text-2xl max-w-3xl leading-relaxed font-medium mx-auto">
+        <p className="text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed font-medium mx-auto">
           Desarrollador y soñador. Explora mis locuras transformadas en código, electrónica y soluciones digitales.
         </p>
       </div>
