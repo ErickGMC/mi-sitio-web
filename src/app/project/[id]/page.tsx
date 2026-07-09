@@ -12,6 +12,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, ExternalLink, GitBranch, ArrowLeft, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function ProjectDetail() {
@@ -103,39 +104,26 @@ export default function ProjectDetail() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column: Media & Details */}
         <div className="lg:col-span-2 space-y-8">
-          {project.galleryUrls && project.galleryUrls.length > 0 ? (
-            <div className="flex w-full gap-2 md:gap-4 h-32 md:h-56">
-              {project.galleryUrls.slice(0, 3).map((img, i) => (
-                <div 
-                  key={i} 
-                  className="flex-1 rounded-xl overflow-hidden border border-border/50 bg-muted/20 relative group shadow-lg cursor-pointer"
-                  onClick={() => setLightboxImage(img)}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={img} alt={`Preview ${i+1}`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="rounded-xl overflow-hidden border border-border/50 bg-muted/20 aspect-video relative group shadow-2xl">
-              {project.embedUrl ? (
-                <iframe 
-                  src={project.embedUrl} 
-                  className="w-full h-full border-0"
-                  allowFullScreen
-                  title={project.title}
-                />
-              ) : project.thumbnailUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={project.thumbnailUrl} alt={project.title} className="w-full h-full object-cover" />
-              ) : (
-                <div className="flex items-center justify-center w-full h-full text-muted-foreground">
-                  No hay vista previa disponible
-                </div>
-              )}
-            </div>
-          )}
+          <div 
+            className={`rounded-2xl overflow-hidden border border-border/50 bg-muted/20 aspect-video relative group shadow-2xl ${
+              (project.thumbnailUrl || project.embedUrl) ? "cursor-pointer" : ""
+            }`}
+            onClick={() => {
+              if (project.thumbnailUrl) setLightboxImage(project.thumbnailUrl);
+              else if (project.embedUrl) setLightboxImage(`https://image.thum.io/get/width/1200/crop/800/${project.embedUrl}`);
+            }}
+          >
+            {project.thumbnailUrl ? (
+              <Image src={project.thumbnailUrl} alt={project.title} fill sizes="(max-width: 1200px) 100vw, 800px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+            ) : project.embedUrl ? (
+              <Image src={`https://image.thum.io/get/width/1200/crop/800/${project.embedUrl}`} alt={`Captura web de ${project.title}`} fill sizes="(max-width: 1200px) 100vw, 800px" className="object-cover transition-transform duration-500 group-hover:scale-105" />
+            ) : (
+              <div className="flex flex-col items-center justify-center w-full h-full text-muted-foreground bg-muted/30">
+                <span className="text-xl font-medium">Sin vista previa</span>
+              </div>
+            )}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none" />
+          </div>
 
           <div className="space-y-6">
             <div>
